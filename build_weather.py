@@ -2,7 +2,7 @@
 # The world's weather file: one line per JMA forecast region, small enough for Udon to split. Run by GitHub Actions, or by hand to look at the result.
 # usage: python build_weather.py out.txt
 # Lines (tab separated): office code, centre name, region name, then for each of 7 days: JMA weather code, rain chance, low, high (empty when not announced).
-# The first line is: SRW1, the report time, the number of regions.
+# The first line is: SRW1, the report time, the number of regions, the date the first day stands for.
 import json, sys, time, urllib.request
 from datetime import date, datetime, timedelta, timezone
 
@@ -103,7 +103,7 @@ def main(path):
     if good == 0:
         sys.exit("no forecast came back")
     with open(path, "w", encoding="utf-8", newline="\n") as f:
-        f.write("SRW1\t%s\t%d\n" % (newest, len(rows)))
+        f.write("SRW1\t%s\t%d\t%s\n" % (newest, len(rows), now.date().isoformat()))
         f.write("\n".join(rows) + "\n")
     print("regions", len(rows), "with forecast", good)
 

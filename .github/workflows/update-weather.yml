@@ -3,7 +3,8 @@ name: update weather
 on:
   schedule:
     - cron: "25 20,2,8 * * *"
-    - cron: "25 14 * * *"
+    # just after midnight, so that the first day in the file is today
+    - cron: "5 15 * * *"
   workflow_dispatch:
 permissions:
   contents: write
